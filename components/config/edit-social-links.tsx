@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Typography, Table, Button, Modal, Input } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import SocialDropdown from './social-icons-dropdown';
 import { fetchData, SOCIAL_PLATFORMS_LIST, NEXT_PUBLIC_API_HOST } from '../../utils/apis';
 import { ServerStatusContext } from '../../utils/server-status-context';
@@ -120,7 +120,7 @@ export default function EditSocialLinks() {
   };
 
   // posts all the variants at once as an array obj
-  const postUpdateToAPI = async (postValue: any) => {
+  const postUpdateToAPI = async (postValue: { platform: string; url: string }[]) => {
     await postConfigUpdateToAPI({
       apiPath: API_SOCIAL_HANDLES,
       data: { value: postValue },
@@ -159,6 +159,24 @@ export default function EditSocialLinks() {
       postData.splice(editId, 1, modalDataState);
     }
     postUpdateToAPI(postData);
+  };
+
+  const handleSortUp = (index: number) => {
+    const newHandles = [...currentSocialHandles];
+
+    if (index !== 0) {
+      newHandles.splice(index - 1, 2, newHandles[index], newHandles[index - 1]);
+    }
+    postUpdateToAPI(newHandles);
+  };
+
+  const handleSortDown = (index: number) => {
+    const newHandles = [...currentSocialHandles];
+
+    if (index !== newHandles.length - 1) {
+      newHandles.splice(index, 2, newHandles[index + 1], newHandles[index]);
+    }
+    postUpdateToAPI(newHandles);
   };
 
   const handleDeleteItem = (index: number) => {
@@ -213,6 +231,8 @@ export default function EditSocialLinks() {
       key: 'edit',
       render: (data, record, index) => (
         <div className="actions">
+          <Button icon={<UpOutlined />} size="small" onClick={() => handleSortUp(index)} />
+          <Button icon={<DownOutlined />} size="small" onClick={() => handleSortDown(index)} />
           <Button
             size="small"
             onClick={() => {
