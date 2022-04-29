@@ -146,7 +146,7 @@ export default function Offline({ logs = [], config }: OfflineProps) {
           <NewsFeed />
         </Col>
       </Row>
-      <LogTable logs={logs} pageSize={5} />
+      <LogTable logs={logs} originalPageSize={5} />
     </>
   );
 }
