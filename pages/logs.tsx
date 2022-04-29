@@ -30,5 +30,5 @@ export default function Logs() {
     };
   }, []);
 
-  return <LogTable logs={logs} pageSize={20} />;
+  return <LogTable logs={logs} originalPageSize={20} />;
 }

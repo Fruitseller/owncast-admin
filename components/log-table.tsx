@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Tag, Typography } from 'antd';
 import Linkify from 'react-linkify';
 import { SortOrder } from 'antd/lib/table/interface';
@@ -24,13 +24,16 @@ function renderMessage(text) {
 
 interface Props {
   logs: object[];
-  pageSize: number;
+  originalPageSize: number;
 }
 
-export default function LogTable({ logs, pageSize }: Props) {
+export default function LogTable({ logs, originalPageSize }: Props) {
   if (!logs?.length) {
     return null;
   }
+
+  const [pageSize] = useState(originalPageSize);
+
   const columns = [
     {
       title: 'Level',
@@ -81,7 +84,7 @@ export default function LogTable({ logs, pageSize }: Props) {
         dataSource={logs}
         columns={columns}
         rowKey={row => row.time}
-        pagination={{ pageSize: pageSize || 20 }}
+        pagination={{ pageSize }}
       />
     </div>
   );
