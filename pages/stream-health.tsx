@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { BulbOutlined, LaptopOutlined, SaveOutlined } from '@ant-design/icons';
 import { Row, Col, Typography, Space, Statistic, Card, Alert, Spin } from 'antd';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState, useContext } from 'react';
 import { ClockCircleOutlined, WarningOutlined, WifiOutlined } from '@ant-design/icons';
 import { fetchData, FETCH_INTERVAL, API_STREAM_HEALTH_METRICS } from '../utils/apis';
 import Chart from '../components/chart';
 import StreamHealthOverview from '../components/stream-health-overview';
+import { ServerStatusContext } from '../utils/server-status-context';
 
 interface TimedValue {
   time: Date;
@@ -249,6 +250,10 @@ export default function StreamHealth() {
     justifyContent: 'center',
     height: '80px',
   };
+
+  const serverStatusData = useContext(ServerStatusContext);
+  const { health } = serverStatusData;
+
   return (
     <>
       <Typography.Title>Stream Performance</Typography.Title>
@@ -263,13 +268,6 @@ export default function StreamHealth() {
         insight into external players people may be using such as VLC, MPV, QuickTime, etc.
       </Typography.Paragraph>
       <Space direction="vertical" size="middle">
-        <Row justify="space-around">
-          <Col style={{ width: '100%' }}>
-            <Card type="inner">
-              <StreamHealthOverview showTroubleshootButton={false} />
-            </Card>
-          </Col>
-        </Row>
         <Row
           gutter={[16, 16]}
           justify="space-around"
@@ -315,7 +313,15 @@ export default function StreamHealth() {
             </Card>
           </Col>
         </Row>
-
+        {health && (
+          <Row justify="space-around">
+            <Col style={{ width: '100%' }}>
+              <Card type="inner">
+                <StreamHealthOverview showTroubleshootButton={false} />
+              </Card>
+            </Col>
+          </Row>
+        )}
         <Card>
           <DescriptionBox
             title="Video Segment Download"
