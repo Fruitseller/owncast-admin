@@ -129,19 +129,16 @@ export default function ViewersOverTime() {
         />
       )}
 
-      <Spin spinning={!viewerInfo.length || loadingChart}>
-        <Dropdown overlay={menu} trigger={['click']}>
-          <button
-            type="button"
-            style={{ float: 'right', background: 'transparent', border: 'unset' }}
-          >
-            {timeWindowStart.title} <DownOutlined />
-          </button>
-        </Dropdown>
-        {viewerInfo.length > 0 && (
-          <Chart title="Viewers" data={viewerInfo} color="#2087E2" unit="" />
-        )}
-
+      <Dropdown overlay={menu} trigger={['click']}>
+        <button
+          type="button"
+          style={{ float: 'right', background: 'transparent', border: 'unset' }}
+        >
+          {timeWindowStart.title} <DownOutlined />
+        </button>
+      </Dropdown>
+      {viewerInfo.length > 0 && <Chart title="Viewers" data={viewerInfo} color="#2087E2" unit="" />}
+      <Spin spinning={!viewerDetails.length || loadingChart}>
         <ViewerTable data={viewerDetails} />
       </Spin>
     </>
