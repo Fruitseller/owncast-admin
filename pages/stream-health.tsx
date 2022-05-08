@@ -93,8 +93,7 @@ export default function StreamHealth() {
       <Alert
         type="info"
         message="
-        Data has not yet been collected. Once a stream has begun and viewers are watching this page
-        will be available."
+        Once a stream has started and viewers have been watching for some time this page will be available."
       />
       <Spin size="large">
         <div style={{ marginTop: '50px', height: '100px' }} />

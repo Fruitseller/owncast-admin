@@ -21,10 +21,10 @@ export default function ConfigNotify() {
 
   return (
     <>
-      <Title>Fediverse Social</Title>
+      <Title>Fediverse Followers</Title>
       <p className="description">
-        Enabling the Fediverse social features will not just alert people to when you go live, but
-        also enable other functionality.
+        Enabling Fediverse social features will alert your followers when you go live, along with
+        other functionality.
       </p>
       <p>
         Fediverse social features:{' '}
