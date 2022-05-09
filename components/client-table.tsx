@@ -1,7 +1,7 @@
 import { Input, Table } from 'antd';
 import { FilterDropdownProps, SortOrder } from 'antd/lib/table/interface';
 import { ColumnsType } from 'antd/es/table';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, CheckCircleTwoTone } from '@ant-design/icons';
 import { formatDistanceToNow } from 'date-fns';
 import { Client } from '../types/chat';
 import UserPopover from './user-popover';
@@ -60,6 +60,19 @@ export default function ClientTable({ data }: ClientTableProps) {
       sorter: (a: any, b: any) =>
         new Date(b.connectedAt).getTime() - new Date(a.connectedAt).getTime(),
       sortDirections: ['descend', 'ascend'] as SortOrder[],
+    },
+    {
+      title: 'Authenticated',
+      dataIndex: 'authenticated',
+      key: 'authenticated',
+      render: (authenticated: boolean) =>
+        authenticated ? (
+          <div>
+            Yes <CheckCircleTwoTone twoToneColor="green" />
+          </div>
+        ) : (
+          'No'
+        ),
     },
     {
       title: 'User Agent',
