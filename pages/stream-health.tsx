@@ -180,7 +180,7 @@ export default function StreamHealth() {
 
   const bitrateChart = [
     {
-      name: 'Lowest player speed',
+      name: 'Slowest player speed',
       color: '#B63FFF',
       data: minimumPlayerBitrate,
       options: { radius: 2 },
@@ -192,7 +192,7 @@ export default function StreamHealth() {
       options: { radius: 2 },
     },
     {
-      name: 'Maximum player speed',
+      name: 'Fastest player speed',
       color: '#02FD0D',
       data: maximumPlayerBitrate,
       options: { radius: 2 },
@@ -224,7 +224,7 @@ export default function StreamHealth() {
   let recentErrorCount = 0;
   const errorValueCount = errorChart[0]?.data.length || 0;
   if (errorValueCount > 5) {
-    const values = errorChart[0].data.slice(-5);
+    const values = errorChart[0].data.slice(-3);
     recentErrorCount = values.reduce((acc, curr) => acc + Number(curr.value), 0);
   } else {
     recentErrorCount = errorChart[0].data.reduce((acc, curr) => acc + Number(curr.value), 0);
