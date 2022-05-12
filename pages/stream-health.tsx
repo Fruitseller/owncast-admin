@@ -60,9 +60,9 @@ export default function StreamHealth() {
       setLowestLatency(result.lowestLatency);
       setMedianLatency(result.medianLatency);
 
-      setMedianSegmentDownloadDurations(result.medianSegmentDownloadDuration);
-      setMaximumSegmentDownloadDurations(result.maximumSegmentDownloadDuration);
-      setMinimumSegmentDownloadDurations(result.minimumSegmentDownloadDuration);
+      setMedianSegmentDownloadDurations(result.medianSegmentDownloadDuration || []);
+      setMaximumSegmentDownloadDurations(result.maximumSegmentDownloadDuration || []);
+      setMinimumSegmentDownloadDurations(result.minimumSegmentDownloadDuration || []);
 
       setMinimumPlayerBitrate(result.minPlayerBitrate);
       setMedianPlayerBitrate(result.medianPlayerBitrate);
@@ -93,7 +93,7 @@ export default function StreamHealth() {
       <Alert
         type="info"
         message="
-        Once a stream has started and viewers have been watching for some time this page will be available."
+        Once a stream has started and viewers have been watching, playback data and metrics will be available to you."
       />
       <Spin size="large">
         <div style={{ marginTop: '50px', height: '100px' }} />
@@ -272,37 +272,41 @@ export default function StreamHealth() {
           justify="space-around"
           style={{ display: showStats ? 'flex' : 'none' }}
         >
+          {currentSpeed !== 0 && (
+            <Col>
+              <Card type="inner">
+                <div style={statStyle}>
+                  <Statistic
+                    title="Viewer Playback Speed"
+                    value={`${currentSpeed}`}
+                    prefix={<WifiOutlined style={{ marginRight: '5px' }} />}
+                    precision={0}
+                    suffix="kbps"
+                  />
+                </div>
+              </Card>
+            </Col>
+          )}
+          {latencyStat !== 0 && (
+            <Col>
+              <Card type="inner">
+                <div style={statStyle}>
+                  <Statistic
+                    title="Viewer Latency"
+                    value={`${latencyStat}`}
+                    prefix={<ClockCircleOutlined style={{ marginRight: '5px' }} />}
+                    precision={0}
+                    suffix="seconds"
+                  />
+                </div>
+              </Card>
+            </Col>
+          )}
           <Col>
             <Card type="inner">
               <div style={statStyle}>
                 <Statistic
-                  title="Viewer Playback Speed"
-                  value={`${currentSpeed}`}
-                  prefix={<WifiOutlined style={{ marginRight: '5px' }} />}
-                  precision={0}
-                  suffix="kbps"
-                />
-              </div>
-            </Card>
-          </Col>
-          <Col>
-            <Card type="inner">
-              <div style={statStyle}>
-                <Statistic
-                  title="Viewer Latency"
-                  value={`${latencyStat}`}
-                  prefix={<ClockCircleOutlined style={{ marginRight: '5px' }} />}
-                  precision={0}
-                  suffix="seconds"
-                />
-              </div>
-            </Card>
-          </Col>
-          <Col>
-            <Card type="inner">
-              <div style={statStyle}>
-                <Statistic
-                  title="Recent Playback Errors"
+                  title="Recent Client Playback Warnings"
                   value={`${recentErrorCount || 0}`}
                   valueStyle={{ color: errorStatColor }}
                   prefix={<WarningOutlined style={{ marginRight: '5px' }} />}
