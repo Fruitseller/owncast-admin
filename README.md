@@ -23,7 +23,8 @@ Since this project hits API endpoints you should make requests in [`componentDid
 
 
 A list of API end points can be found here:
-https://owncast.online/api/development/
+* https://owncast.online/docs/api/
+* https://owncast.online/api/latest/
 
 ### Auth-ing for APIs
 Auth: HTTP Basic
